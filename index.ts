@@ -1,4 +1,5 @@
 import window from "./lib/window";
+import renderer from "./lib/renderer";
 
 const bind = require("./build/Release/SDL3.node");
 
@@ -25,5 +26,6 @@ export default {
 	initSensor() { bind.initSubSystem(initFlags.Sensor); },
 	initCamera() { bind.initSubSystem(initFlags.Camera); },
 	quit: <() => void>bind.quit,
-	window
+	window,
+	renderer
 };

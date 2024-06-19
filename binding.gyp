@@ -3,14 +3,17 @@
 		{
 			"target_name": "SDL3",
 			"sources": [
-				"src/index.c"
+				"src/index.c",
+				"src/events.c",
+				"src/video/window.c",
+				"src/video/renderer.c"
 			],
 			"defines": [
-				# "DEBUG_SDL"
+				"DEBUG_SDL"
 			],
 			"conditions": [
 				['OS == "linux"', {
-					"include_dirs": [ "-I.", "<!(pkgconf sdl3 --cflags-only-I)" ],
+					"include_dirs": [ "-Isrc/", "<!(pkgconf sdl3 --cflags-only-I)" ],
 					"libraries": [ "<!(pkgconf sdl3 --libs)" ]
 				}]
 			]

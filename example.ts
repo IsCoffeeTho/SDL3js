@@ -4,7 +4,13 @@ SDL3.initVideo();
 
 const app = new SDL3.window({
 	title: "Example window",
-	resizable: true
+	width: 500,
+	height: 500
 });
 
-SDL3.quit();
+while (true) {
+	app.renderer.setColor(0x111111FF);
+	app.renderer.clear();
+
+	app.renderer.present();
+}
