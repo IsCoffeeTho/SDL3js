@@ -5,7 +5,7 @@
 /*                                                          |     |       |   */
 /*   events.c                                               |      \      |   */
 /*                                                          |       |     |   */
-/*   Last Edited: 07:41AM 20/06/2024                         \      |    /    */
+/*   Last Edited: 06:59AM 21/06/2024                         \      |    /    */
 /*                                                             \   /   /      */
 /*                                                                            */
 /* ========================================================================== */
@@ -14,10 +14,23 @@
 
 napi_value sdl3_PollEvent(napi_env env, napi_callback_info info)
 {
+	size_t argc = 1;
+	napi_value args[1]; // emit(string, ...args): void 
+
+	napi_get_cb_info(env, info, &argc, args, NULL, NULL);
+	if (argc != 1)
+		napi_throw_error(env, "Error", "Invalid amount of arguments. expects (Function)");
+	napi_valuetype type;
+	napi_status status = napi_typeof(env, args[0], &type);
+	if (status != napi_ok) return node_handle_error(env, status, "emit");
+	if (type != napi_function) return node_handle_error(env, napi_function_expected, "emit");
+	
 	SDL_Event event;
 	if (!SDL_PollEvent(&event))
 		return undefined;
+
 	
+
 	return null;
 }
 

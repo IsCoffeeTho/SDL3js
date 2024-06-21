@@ -5,7 +5,7 @@
 /*                                                          |     |       |   */
 /*   renderer.c                                             |      \      |   */
 /*                                                          |       |     |   */
-/*   Last Edited: 07:10AM 20/06/2024                         \      |    /    */
+/*   Last Edited: 07:23PM 20/06/2024                         \      |    /    */
 /*                                                             \   /   /      */
 /*                                                                            */
 /* ========================================================================== */
@@ -27,7 +27,7 @@ napi_value sdl3_CreateRenderer(napi_env env, napi_callback_info info)
 	
 	napi_status status;
 	status = napi_get_value_external(env, args[0], (void **)&window);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "SDL_Window");
 
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
@@ -43,7 +43,7 @@ napi_value sdl3_CreateRenderer(napi_env env, napi_callback_info info)
 napi_value sdl3_SetRendererDrawColor(napi_env env, napi_callback_info info)
 {	
 	size_t argc = 5;
-	napi_value args[5]; // renderer, uint8, uint8, uint8, uint8
+	napi_value args[5]; // SDL_Renderer, uint8, uint8, uint8, uint8
 
 	napi_get_cb_info(env, info, &argc, args, NULL, NULL);
 	if (argc != 5) {
@@ -56,15 +56,15 @@ napi_value sdl3_SetRendererDrawColor(napi_env env, napi_callback_info info)
 	
 	napi_status status;
 	status = napi_get_value_external(env, args[0], (void **)&renderer);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "SDL_Renderer");
 	status = napi_get_value_int32(env, args[1], &red);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "red");
 	status = napi_get_value_int32(env, args[2], &green);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "green");
 	status = napi_get_value_int32(env, args[3], &blue);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "blue");
 	status = napi_get_value_int32(env, args[4], &alpha);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "alpha");
 
 	if (SDL_SetRenderDrawColor(renderer, red & 0xFF, green & 0xFF, blue & 0xFF, alpha & 0xFF)) {
 		napi_throw_error(env, "SDLError", SDL_GetError());
@@ -77,7 +77,7 @@ napi_value sdl3_SetRendererDrawColor(napi_env env, napi_callback_info info)
 napi_value sdl3_RenderClear(napi_env env, napi_callback_info info)
 {
 	size_t argc = 1;
-	napi_value args[1]; // window
+	napi_value args[1]; // SDL_Renderer
 
 	napi_get_cb_info(env, info, &argc, args, NULL, NULL);
 	if (argc != 1) {
@@ -88,7 +88,7 @@ napi_value sdl3_RenderClear(napi_env env, napi_callback_info info)
 	SDL_Renderer *renderer;
 	napi_status status;
 	status = napi_get_value_external(env, args[0], (void **)&renderer);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "SDL_Renderer");
 
 	if (SDL_RenderClear(renderer)) {
 		napi_throw_error(env, "SDLError", SDL_GetError());
@@ -100,7 +100,7 @@ napi_value sdl3_RenderClear(napi_env env, napi_callback_info info)
 napi_value sdl3_RenderPresent(napi_env env, napi_callback_info info)
 {
 	size_t argc = 1;
-	napi_value args[1]; // window
+	napi_value args[1]; // SDL_Renderer
 
 	napi_get_cb_info(env, info, &argc, args, NULL, NULL);
 	if (argc != 1) {
@@ -111,7 +111,7 @@ napi_value sdl3_RenderPresent(napi_env env, napi_callback_info info)
 	SDL_Renderer *renderer;
 	napi_status status;
 	status = napi_get_value_external(env, args[0], (void **)&renderer);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "SDL_Renderer");
 
 	if (SDL_RenderPresent(renderer)) {
 		napi_throw_error(env, "SDLError", SDL_GetError());

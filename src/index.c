@@ -5,24 +5,12 @@
 /*                                                          |     |       |   */
 /*   index.c                                                |      \      |   */
 /*                                                          |       |     |   */
-/*   Last Edited: 07:16AM 20/06/2024                         \      |    /    */
+/*   Last Edited: 05:51PM 20/06/2024                         \      |    /    */
 /*                                                             \   /   /      */
 /*                                                                            */
 /* ========================================================================== */
 
 #include "SDL3js.h"
-
-napi_value node_handle_error(napi_env env, napi_status status)
-{
-	if (status == napi_string_expected) {
-		napi_throw_type_error(env, "TypeError", "Expected string");
-	} else if (status == napi_number_expected) {
-		napi_throw_type_error(env, "TypeError", "Expected number");
-	} else {
-		napi_throw_error(env, "Error", "Unknown Error");
-	}
-	return undefined;
-}
 
 napi_value sdl3_quit(napi_env env, napi_callback_info info)
 {
@@ -40,7 +28,7 @@ napi_value sdl3_initSubSystem(napi_env env, napi_callback_info info)
 	if (!argc)
 		napi_throw_error(env, "Error", "SDL3.init(initFlags: number) is missing argument initFlags");
 	napi_status status = napi_get_value_uint32(env, args[0], &init_flags);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "initFlags");
 	if (!SDL_Init(init_flags))
 		return bool_true;
 	napi_throw_error(env, "SDLError", SDL_GetError());

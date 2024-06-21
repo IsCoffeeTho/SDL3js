@@ -5,7 +5,7 @@
 /*                                                          |     |       |   */
 /*   window.c                                               |      \      |   */
 /*                                                          |       |     |   */
-/*   Last Edited: 07:14AM 20/06/2024                         \      |    /    */
+/*   Last Edited: 05:45PM 20/06/2024                         \      |    /    */
 /*                                                             \   /   /      */
 /*                                                                            */
 /* ========================================================================== */
@@ -29,13 +29,13 @@ napi_value sdl3_CreateWindow(napi_env env, napi_callback_info info)
 	
 	napi_status status;
 	status = napi_get_value_string_utf8(env, args[0], title, 256, &title_len);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "title");
 	status = napi_get_value_int32(env, args[1], &width);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "width");
 	status = napi_get_value_int32(env, args[2], &height);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "height");
 	status = napi_get_value_uint32(env, args[3], &flags);
-	if (status != napi_ok) return node_handle_error(env, status);
+	if (status != napi_ok) return node_handle_error(env, status, "windowFlags");
 
 	SDL_Window *window = SDL_CreateWindow(title, width, height, flags);
 

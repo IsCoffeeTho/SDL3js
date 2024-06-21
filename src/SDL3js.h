@@ -5,7 +5,7 @@
 /*                                                          |     |       |   */
 /*   SDL3js.h                                               |      \      |   */
 /*                                                          |       |     |   */
-/*   Last Edited: 07:17AM 20/06/2024                         \      |    /    */
+/*   Last Edited: 05:44PM 20/06/2024                         \      |    /    */
 /*                                                             \   /   /      */
 /*                                                                            */
 /* ========================================================================== */
@@ -26,7 +26,7 @@
 #define dbg_printf(...)
 #endif
 
-napi_value node_handle_error(napi_env env, napi_status status);
+napi_value node_handle_error(napi_env env, napi_status status, const char* arg);
 
 void create_event(napi_env env, napi_value *result);
 
